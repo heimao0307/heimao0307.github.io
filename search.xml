@@ -34,4 +34,17 @@
     <url>/2021/06/22/%E6%88%91%E7%9A%84%E7%AC%AC%E4%B8%80%E7%AF%87%E6%96%87%E7%AB%A0/</url>
     <content><![CDATA[]]></content>
   </entry>
+  <entry>
+    <title>kubernetes安装部署</title>
+    <url>/2021/06/25/kubernetes%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/</url>
+    <content><![CDATA[<h1 id="kubernetes部署"><a href="#kubernetes部署" class="headerlink" title="# kubernetes部署"></a># kubernetes部署</h1><figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">kubectl get pods -n kube-system</span><br></pre></td></tr></table></figure>
+
+<blockquote>
+<p>备注：需要注意，关闭防火墙。</p>
+</blockquote>
+]]></content>
+      <tags>
+        <tag>kubernetes</tag>
+      </tags>
+  </entry>
 </search>
