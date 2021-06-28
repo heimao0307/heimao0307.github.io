@@ -86,12 +86,12 @@
 
 
 
-<meta name="description" content="Grafana–Dashboard–162和9614表达式 【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes)">
+<meta name="description" content="【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) &#x2F; sum(node_memory_MemTotal_b">
 <meta property="og:type" content="article">
 <meta property="og:title" content="liebao">
-<meta property="og:url" content="http://example.com/2021/06/28/Untitled/index.html">
+<meta property="og:url" content="http://example.com/2021/06/28/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
 <meta property="og:site_name" content="liebao">
-<meta property="og:description" content="Grafana–Dashboard–162和9614表达式 【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes)">
+<meta property="og:description" content="【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) &#x2F; sum(node_memory_MemTotal_b">
 <meta property="og:locale">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/e1a27e54-f374-4e0c-bbe9-0f080ffa9537-4012926.jpg">
@@ -107,7 +107,7 @@
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/7a11bed5-6525-4948-96f9-17bfad2024cf-4012926.jpg">
 <meta property="og:image" content="https://api2.mubu.com/v3/document_image/a5a3095d-edd5-4bce-9e55-7b3dffc5709e-4012926.jpg">
 <meta property="article:published_time" content="2021-06-28T02:21:25.293Z">
-<meta property="article:modified_time" content="2021-06-28T06:18:47.022Z">
+<meta property="article:modified_time" content="2021-06-28T06:25:49.955Z">
 <meta property="article:author" content="猎豹">
 <meta property="article:tag" content="DevOps、云原生">
 <meta name="twitter:card" content="summary">
@@ -141,7 +141,7 @@
 
 
 
-  <link rel="canonical" href="http://example.com/2021/06/28/Untitled/"/>
+  <link rel="canonical" href="http://example.com/2021/06/28/Grafana--Dashboard--162和9614表达式/"/>
 
 
 
@@ -318,7 +318,7 @@
   
   
   <div class="post-block">
-    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/28/Untitled/">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/06/28/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="name" content="">
@@ -379,7 +379,7 @@
                   <span class="post-meta-item-text">字数统计&#58;</span>
                 
                 <span title="字数统计">
-                  528
+                  521
                 </span>
               
 
@@ -416,8 +416,7 @@
       
 
       
-        <p>Grafana–Dashboard–162和9614表达式</p>
-<h2 id="【推荐】162是目前在使用并且得到研发认可的模板"><a href="#【推荐】162是目前在使用并且得到研发认可的模板" class="headerlink" title="【推荐】162是目前在使用并且得到研发认可的模板"></a>【推荐】<strong>162是目前在使用并且得到研发认可的模板</strong><img src="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg" alt="image"></h2><h3 id="Cluster-memory-usage（集群内存使用）"><a href="#Cluster-memory-usage（集群内存使用）" class="headerlink" title="Cluster memory usage（集群内存使用）"></a>Cluster memory usage（集群内存使用）<img src="https://api2.mubu.com/v3/document_image/e1a27e54-f374-4e0c-bbe9-0f080ffa9537-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) / sum(node_memory_MemTotal_bytes) * 100</span><br></pre></td></tr></table></figure>
+        <h2 id="【推荐】162是目前在使用并且得到研发认可的模板"><a href="#【推荐】162是目前在使用并且得到研发认可的模板" class="headerlink" title="【推荐】162是目前在使用并且得到研发认可的模板"></a>【推荐】<strong>162是目前在使用并且得到研发认可的模板</strong><img src="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg" alt="image"></h2><h3 id="Cluster-memory-usage（集群内存使用）"><a href="#Cluster-memory-usage（集群内存使用）" class="headerlink" title="Cluster memory usage（集群内存使用）"></a>Cluster memory usage（集群内存使用）<img src="https://api2.mubu.com/v3/document_image/e1a27e54-f374-4e0c-bbe9-0f080ffa9537-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) / sum(node_memory_MemTotal_bytes) * 100</span><br></pre></td></tr></table></figure>
 
 <h3 id="Cluster-CPU-usage（集群CPU使用）"><a href="#Cluster-CPU-usage（集群CPU使用）" class="headerlink" title="Cluster CPU usage（集群CPU使用）"></a>Cluster CPU usage（集群CPU使用）<img src="https://api2.mubu.com/v3/document_image/dc46a700-2094-4557-9eb9-e95c55c2e6e4-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum(sum by (container_name)( rate(container_cpu_usage_seconds_total&#123;image!=&quot;&quot;&#125;[1m] ) )) / count(node_cpu_seconds_total&#123;mode=&quot;system&quot;&#125;) * 100</span><br></pre></td></tr></table></figure>
 
@@ -690,7 +689,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共622字</span>
+  <span class="post-count">博客全站共615字</span>
 </div>
 
         
