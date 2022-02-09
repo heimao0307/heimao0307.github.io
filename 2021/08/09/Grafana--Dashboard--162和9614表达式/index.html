@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="zh-Hans">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 5.4.0">
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free@5.15.4/css/all.min.css" integrity="sha256-mUZM63G8m73Mcidfrv5E+Y61y7a12O5mW4ezU3bxqW4=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/animate.css@3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"example.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.10.0","exturl":false,"sidebar":{"position":"left","display":"post","padding":18,"offset":12},"copycode":false,"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"prism":false,"i18n":{"placeholder":"بحث...","empty":"We didn't find any results for the search: ${query}","hits_time":"${hits} results found in ${time} ms","hits":"${hits} results found"}}</script><script src="/js/config.js"></script>
+
+  <meta name="description" content="title: 我的第一篇文章date: 2021-06-22 17:34:29tags: 【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory">
+<meta property="og:type" content="website">
+<meta property="og:title" content="liebao">
+<meta property="og:url" content="http://example.com/2021/08/09/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/index.html">
+<meta property="og:site_name" content="liebao">
+<meta property="og:description" content="title: 我的第一篇文章date: 2021-06-22 17:34:29tags: 【推荐】162是目前在使用并且得到研发认可的模板Cluster memory usage（集群内存使用）1(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory">
+<meta property="og:locale">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/e1a27e54-f374-4e0c-bbe9-0f080ffa9537-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/dc46a700-2094-4557-9eb9-e95c55c2e6e4-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/86dac365-ebed-4cb6-8f89-c2b8acb41008-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/9dd836bd-a941-42a0-a168-da36a87b13d7-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/f71a43f0-26b9-4d20-b683-f8011d23db83-4012926.jpg">
+<meta property="og:image" content="http://example.com/2021/08/09/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/asserts/image-20210628145002568.png">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/f636e212-d56a-442c-982b-45f4d7dd5d6c-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/52378914-d6d7-44db-b478-125d82c2cd05-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/07f919b3-5fe1-47bf-adfc-981369046656-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/7c168604-cd3b-4451-b0a4-ef66d2a7069c-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/7a11bed5-6525-4948-96f9-17bfad2024cf-4012926.jpg">
+<meta property="og:image" content="https://api2.mubu.com/v3/document_image/a5a3095d-edd5-4bce-9e55-7b3dffc5709e-4012926.jpg">
+<meta property="article:published_time" content="2021-08-09T10:32:35.487Z">
+<meta property="article:modified_time" content="2021-06-28T06:50:18.236Z">
+<meta property="article:author" content="猎豹">
+<meta property="article:tag" content="DevOps、云原生">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg">
+
+
+<link rel="canonical" href="http://example.com/2021/08/09/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-Hans","comments":true,"permalink":"http://example.com/2021/08/09/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/","path":"2021/08/09/Grafana--Dashboard--162和9614表达式/","title":""}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title> | liebao</title>
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <header class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="تشغيل شريط التصفح" role="button">
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">liebao</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">日拱一卒，功不唐捐。</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger">
+    </div>
+  </div>
+</div>
+
+
+
+
+
+
+
+</div>
+        
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          المحتويات
+        </li>
+        <li class="sidebar-nav-overview">
+          عام
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%8E%A8%E8%8D%90%E3%80%91162%E6%98%AF%E7%9B%AE%E5%89%8D%E5%9C%A8%E4%BD%BF%E7%94%A8%E5%B9%B6%E4%B8%94%E5%BE%97%E5%88%B0%E7%A0%94%E5%8F%91%E8%AE%A4%E5%8F%AF%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="nav-number">1.</span> <span class="nav-text">【推荐】162是目前在使用并且得到研发认可的模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-memory-usage%EF%BC%88%E9%9B%86%E7%BE%A4%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.1.</span> <span class="nav-text">Cluster memory usage（集群内存使用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-CPU-usage%EF%BC%88%E9%9B%86%E7%BE%A4CPU%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.2.</span> <span class="nav-text">Cluster CPU usage（集群CPU使用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Cluster-Filesystem-usage%EF%BC%88%E9%9B%86%E7%BE%A4%E6%96%87%E4%BB%B6%E7%B3%BB%E7%BB%9F%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.3.</span> <span class="nav-text">Cluster Filesystem usage（集群文件系统使用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod-CPU-usage%EF%BC%88Pod-CPU-%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.4.</span> <span class="nav-text">Pod CPU  usage（Pod CPU 使用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod-memory-usage%EF%BC%88Pod%E5%86%85%E5%AD%98%E4%BD%BF%E7%94%A8%EF%BC%89"><span class="nav-number">1.5.</span> <span class="nav-text">Pod memory usage（Pod内存使用）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Pod-Network-i-o%EF%BC%88Pod%E7%BD%91%E7%BB%9C%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%EF%BC%89"><span class="nav-number">1.6.</span> <span class="nav-text">Pod Network i&#x2F;o（Pod网络输入输出）</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E3%80%90%E6%8E%A8%E8%8D%90%E3%80%919614%E6%98%AF%E7%9B%AE%E5%89%8D%E4%BD%BF%E7%94%A8%E7%9A%84%E7%9B%91%E6%8E%A7ingress%E7%9A%84%E6%A8%A1%E6%9D%BF"><span class="nav-number">2.</span> <span class="nav-text">【推荐】9614是目前使用的监控ingress的模板</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Controlleer-Request-volume%EF%BC%88%E7%BD%91%E5%85%B3%E7%9A%84%E8%AF%B7%E6%B1%82%E6%83%85%E5%86%B5%EF%BC%89"><span class="nav-number">2.1.</span> <span class="nav-text">Controlleer Request volume（网关的请求情况）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller-Connections"><span class="nav-number">2.2.</span> <span class="nav-text">Controller Connections</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Controller-Success-Rate%EF%BC%88non-4-5xx-responses%EF%BC%89"><span class="nav-number">2.3.</span> <span class="nav-text">Controller Success Rate（non-4|5xx responses）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E3%80%90%E6%9C%AA%E6%88%90%E5%8A%9F%E3%80%91Last-Config-Failed"><span class="nav-number">2.4.</span> <span class="nav-text">【未成功】Last Config Failed</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ingress-Request-Volume"><span class="nav-number">2.5.</span> <span class="nav-text">Ingress Request Volume</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Ingress-Success-Rate%EF%BC%88non-4-5xx-responses%EF%BC%89"><span class="nav-number">2.6.</span> <span class="nav-text">Ingress Success Rate（non-4|5xx responses）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Network-I-O-pressure"><span class="nav-number">2.7.</span> <span class="nav-text">Network I&#x2F;O pressure</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author site-overview-item animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">猎豹</p>
+  <div class="site-description" itemprop="description">真正的核心竞争力：\n 1、发现机会的能力；\n 2、持续学习和进步的能力；\n 3、保持健康，活得长并且精力充沛才能做事。</div>
+</div>
+<div class="site-state-wrap site-overview-item animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">7</span>
+          <span class="site-state-item-name">المقالات</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+          <a href="/categories/">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">التصنيفات</span></a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">2</span>
+        <span class="site-state-item-name">الوسوم</span></a>
+      </div>
+  </nav>
+</div>
+
+
+
+        </div>
+      </div>
+    </div>
+  </aside>
+  <div class="sidebar-dimmer"></div>
+
+
+    </header>
+
+    
+  <div class="back-to-top" role="button" aria-label="Back to top">
+    <i class="fa fa-arrow-up"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-Hans">
+    <link itemprop="mainEntityOfPage" href="http://example.com/2021/08/09/Grafana--Dashboard--162%E5%92%8C9614%E8%A1%A8%E8%BE%BE%E5%BC%8F/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="猎豹">
+      <meta itemprop="description" content="真正的核心竞争力：\n 1、发现机会的能力；\n 2、持续学习和进步的能力；\n 3、保持健康，活得长并且精力充沛才能做事。">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="liebao">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">نُشر في</span>
+
+      <time title="أُنشأ: 2021-08-09 18:32:35" itemprop="dateCreated datePublished" datetime="2021-08-09T18:32:35+08:00">2021-08-09</time>
+    </span>
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar-check"></i>
+      </span>
+      <span class="post-meta-item-text">عُدل في</span>
+      <time title="عُدل: 2021-06-28 14:50:18" itemprop="dateModified" datetime="2021-06-28T14:50:18+08:00">2021-06-28</time>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+        <p>title: 我的第一篇文章<br>date: 2021-06-22 17:34:29<br>tags:</p>
+<h2 id="【推荐】162是目前在使用并且得到研发认可的模板"><a href="#【推荐】162是目前在使用并且得到研发认可的模板" class="headerlink" title="【推荐】162是目前在使用并且得到研发认可的模板"></a>【推荐】<strong>162是目前在使用并且得到研发认可的模板</strong><img src="https://api2.mubu.com/v3/document_image/51591013-3bc8-4981-9578-eff2d8067c89-4012926.jpg" alt="image"></h2><h3 id="Cluster-memory-usage（集群内存使用）"><a href="#Cluster-memory-usage（集群内存使用）" class="headerlink" title="Cluster memory usage（集群内存使用）"></a>Cluster memory usage（集群内存使用）<img src="https://api2.mubu.com/v3/document_image/e1a27e54-f374-4e0c-bbe9-0f080ffa9537-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(sum(node_memory_MemTotal_bytes) - sum(node_memory_MemFree_bytes+node_memory_Buffers_bytes+node_memory_Cached_bytes) ) / sum(node_memory_MemTotal_bytes) * 100</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cluster-CPU-usage（集群CPU使用）"><a href="#Cluster-CPU-usage（集群CPU使用）" class="headerlink" title="Cluster CPU usage（集群CPU使用）"></a>Cluster CPU usage（集群CPU使用）<img src="https://api2.mubu.com/v3/document_image/dc46a700-2094-4557-9eb9-e95c55c2e6e4-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">sum(sum by (container_name)( rate(container_cpu_usage_seconds_total&#123;image!=&quot;&quot;&#125;[1m] ) )) / count(node_cpu_seconds_total&#123;mode=&quot;system&quot;&#125;) * 100</span><br></pre></td></tr></table></figure>
+
+<h3 id="Cluster-Filesystem-usage（集群文件系统使用）"><a href="#Cluster-Filesystem-usage（集群文件系统使用）" class="headerlink" title="Cluster Filesystem usage（集群文件系统使用）"></a>Cluster Filesystem usage（集群文件系统使用）</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">(sum(node_filesystem_size_bytes&#123;device=&quot;rootfs&quot;&#125;) - sum(node_filesystem_free_bytes&#123;device=&quot;rootfs&quot;&#125;) ) / sum(node_filesystem_size_bytes&#123;device=&quot;rootfs&quot;&#125;) * 100</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Pod-CPU-usage（Pod-CPU-使用）"><a href="#Pod-CPU-usage（Pod-CPU-使用）" class="headerlink" title="Pod CPU  usage（Pod CPU 使用）"></a>Pod CPU  usage（Pod CPU 使用）<img src="https://api2.mubu.com/v3/document_image/86dac365-ebed-4cb6-8f89-c2b8acb41008-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Metrics：sum by (pod)( rate(container_cpu_usage_seconds_total&#123;image!=&quot;&quot;&#125;[1m] ) )；</span><br><span class="line">变量：&#123;&#123;pod&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Pod-memory-usage（Pod内存使用）"><a href="#Pod-memory-usage（Pod内存使用）" class="headerlink" title="Pod memory usage（Pod内存使用）"></a>Pod memory usage（Pod内存使用）<img src="https://api2.mubu.com/v3/document_image/9dd836bd-a941-42a0-a168-da36a87b13d7-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Metrics：sort_desc(sum(container_memory_usage_bytes&#123;image!=&quot;&quot;&#125;) by (pod, image))</span><br><span class="line">变量：&#123;&#123;pod&#125;&#125;</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Pod-Network-i-o（Pod网络输入输出）"><a href="#Pod-Network-i-o（Pod网络输入输出）" class="headerlink" title="Pod Network i/o（Pod网络输入输出）"></a>Pod Network i/o（Pod网络输入输出）<img src="https://api2.mubu.com/v3/document_image/f71a43f0-26b9-4d20-b683-f8011d23db83-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Metrics A：sort_desc(sum by (pod) (rate (container_network_receive_bytes_total&#123;name!=&quot;&quot;, pod=~&quot;.*&quot;&#125;[1m]) ))；</span><br><span class="line">Metrics B：sort_desc(sum by (pod) (rate (container_network_transmit_bytes_total&#123;name!=&quot;&quot;, pod=~&quot;.*&quot;&#125;[1m]) ))；</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="【推荐】9614是目前使用的监控ingress的模板"><a href="#【推荐】9614是目前使用的监控ingress的模板" class="headerlink" title="【推荐】9614是目前使用的监控ingress的模板"></a>【推荐】9614是目前使用的监控ingress的模板<img src="asserts/image-20210628145002568.png" alt="image-20210628145002568"></h2><p>模板地址：<a target="_blank" rel="noopener" href="https://grafana.com/grafana/dashboards/9614">https://grafana.com/grafana/dashboards/9614</a></p>
+<h3 id="Controlleer-Request-volume（网关的请求情况）"><a href="#Controlleer-Request-volume（网关的请求情况）" class="headerlink" title="Controlleer Request volume（网关的请求情况）"></a>Controlleer Request volume（网关的请求情况）<img src="https://api2.mubu.com/v3/document_image/f636e212-d56a-442c-982b-45f4d7dd5d6c-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">举例：1.9ops表示每秒请求网关1.9次；</span><br><span class="line">表达式：round(sum(irate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~&quot;$controller&quot;,controller_class=~&quot;$controller_class&quot;,namespace=~&quot;$namespace&quot;&#125;[2m])), 0.001)；</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Controller-Connections"><a href="#Controller-Connections" class="headerlink" title="Controller Connections"></a>Controller Connections<img src="https://api2.mubu.com/v3/document_image/52378914-d6d7-44db-b478-125d82c2cd05-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表达式：sum(avg_over_time(nginx_ingress_controller_nginx_process_connections&#123;controller_pod=~&quot;$controller&quot;,controller_class=~&quot;$controller_class&quot;,controller_namespace=~&quot;​$namespace&quot;&#125;[2m]))；</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Controller-Success-Rate（non-4-5xx-responses）"><a href="#Controller-Success-Rate（non-4-5xx-responses）" class="headerlink" title="Controller Success Rate（non-4|5xx responses）"></a>Controller Success Rate（non-4|5xx responses）<img src="https://api2.mubu.com/v3/document_image/07f919b3-5fe1-47bf-adfc-981369046656-4012926.jpg" alt="img"></h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表达式：sum(rate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~&quot;$controller&quot;,controller_class=~&quot;$controller_class&quot;,namespace=~&quot;$namespace&quot;,status!~&quot;[4-5].*&quot;&#125;[2m])) / sum(rate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~&quot;$controller&quot;,controller_class=~&quot;$controller_class&quot;,namespace=~&quot;​$namespace&quot;&#125;[2m]))；</span><br></pre></td></tr></table></figure>
+
+<p>`</p>
+<h3 id="【未成功】Last-Config-Failed"><a href="#【未成功】Last-Config-Failed" class="headerlink" title="【未成功】Last Config Failed"></a>【未成功】Last Config Failed</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">原表达式：count(nginx_ingress_controller_config_last_reload_successful&#123;controller_pod=~&quot;$controller&quot;,controller_namespace=~&quot;$namespace&quot;&#125; == 0)；</span><br><span class="line">新表达式：</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Ingress-Request-Volume"><a href="#Ingress-Request-Volume" class="headerlink" title="Ingress Request Volume"></a>Ingress Request Volume<img src="https://api2.mubu.com/v3/document_image/7c168604-cd3b-4451-b0a4-ef66d2a7069c-4012926.jpg" alt="img"></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表达式：round(sum(irate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~<span class="string">&quot;<span class="variable">$controller</span>&quot;</span>,controller_class=~<span class="string">&quot;<span class="variable">$controller_class</span>&quot;</span>,controller_namespace=~<span class="string">&quot;​<span class="variable">$namespace</span>&quot;</span>,ingress=~<span class="string">&quot;<span class="variable">$ingress</span>&quot;</span>&#125;[2m])) by (ingress), 0.001)；</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Ingress-Success-Rate（non-4-5xx-responses）"><a href="#Ingress-Success-Rate（non-4-5xx-responses）" class="headerlink" title="Ingress Success Rate（non-4|5xx responses）"></a>Ingress Success Rate（non-4|5xx responses）<img src="https://api2.mubu.com/v3/document_image/7a11bed5-6525-4948-96f9-17bfad2024cf-4012926.jpg" alt="img"></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">表达式：sum(rate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~<span class="string">&quot;<span class="variable">$controller</span>&quot;</span>,controller_class=~<span class="string">&quot;<span class="variable">$controller_class</span>&quot;</span>,namespace=~<span class="string">&quot;<span class="variable">$namespace</span>&quot;</span>,ingress=~<span class="string">&quot;<span class="variable">$ingress</span>&quot;</span>,status!~<span class="string">&quot;[4-5].*&quot;</span>&#125;[2m])) by (ingress) / sum(rate(nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~<span class="string">&quot;<span class="variable">$controller</span>&quot;</span>,controller_class=~<span class="string">&quot;<span class="variable">$controller_class</span>&quot;</span>,namespace=~<span class="string">&quot;​<span class="variable">$namespace</span>&quot;</span>,ingress=~<span class="string">&quot;<span class="variable">$ingress</span>&quot;</span>&#125;[2m])) by (ingress)；</span><br></pre></td></tr></table></figure>
+
+
+
+<h3 id="Network-I-O-pressure"><a href="#Network-I-O-pressure" class="headerlink" title="Network I/O pressure"></a>Network I/O pressure<img src="https://api2.mubu.com/v3/document_image/a5a3095d-edd5-4bce-9e55-7b3dffc5709e-4012926.jpg" alt="img"></h3><figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">表达式1：sum (irate (nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~<span class="string">&quot;<span class="variable">$controller</span>&quot;</span>,controller_class=~<span class="string">&quot;<span class="variable">$controller_class</span>&quot;</span>,controller_namespace=~<span class="string">&quot;<span class="variable">$namespace</span>&quot;</span>&#125;[2m]))；</span><br><span class="line">表达式2：- sum (irate (nginx_ingress_controller_nginx_process_requests_total&#123;controller_pod=~<span class="string">&quot;<span class="variable">$controller</span>&quot;</span>,controller_class=~<span class="string">&quot;<span class="variable">$controller_class</span>&quot;</span>,controller_namespace=~<span class="string">&quot;<span class="variable">$namespace</span>&quot;</span>&#125;[2m]))；</span><br></pre></td></tr></table></figure>
+
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2021/06/25/kubernetes%E5%AE%89%E8%A3%85%E9%83%A8%E7%BD%B2/" rel="prev" title="kubernetes安装部署">
+                  <i class="fa fa-chevron-left"></i> kubernetes安装部署
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2021/08/09/%E4%B8%80%E4%B8%AA%E7%AE%80%E5%8D%95%E7%9A%84Java%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F/" rel="next" title="">
+                   <i class="fa fa-chevron-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+
+<div class="copyright">
+  &copy; 
+  <span itemprop="copyrightYear">2022</span>
+  <span class="with-love">
+    <i class="fa fa-heart"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">猎豹</span>
+</div>
+  <div class="powered-by">تطبيق الموقع <a href="https://hexo.io/" rel="noopener" target="_blank">Hexo</a> & <a href="https://theme-next.js.org/muse/" rel="noopener" target="_blank">NexT.Muse</a>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <script src="https://cdn.jsdelivr.net/npm/animejs@3.2.1/lib/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous"></script>
+<script src="/js/comments.js"></script><script src="/js/utils.js"></script><script src="/js/motion.js"></script><script src="/js/schemes/muse.js"></script><script src="/js/next-boot.js"></script>
+
+  
+
+
+
+
+
+  
+
+
+
+
+
+</body>
+</html>
